@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Selenium Test Automation</title>
+    <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Selenium Test Automation</h1>
+        <button id="runTest">Run Test</button>
+        <pre id="output"></pre>
+    </div>
+
+    <script>
+        document.getElementById('runTest').addEventListener('click', function() {
+            fetch('/run-test', { method: 'POST' })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.status === "success") {
+                        document.getElementById('output').textContent = data.output;
+                    } else {
+                        document.getElementById('output').textContent = "Error: " + data.message;
+                    }
+                })
+                .catch(error => console.error('Error:', error));
+        });
+    </script>
+</body>
+</html>
